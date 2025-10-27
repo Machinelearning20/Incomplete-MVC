@@ -1,0 +1,32 @@
+dataset: Caltech-5V
+missrate: 0.1 # 缺失率
+save_dir: "./results/${dataset}/m_${missrate}"
+pretrain_epochs: 200
+warm_up: 200 # warm_up只最小化MSE，不最小化相似性
+complete_epochs: 90 # 完整子数据集上的训练轮数
+epochs: 90 # 整个数据集上的训练轮数
+testing: true    
+pretrain_weights: "${save_dir}/ae_weights.pth"
+save: false # save the weights
+complete_sub_weights: "${save_dir}/model_complete_sub.pth" 
+final_weights: "${save_dir}/model_final.pth" 
+train_ae: true # 是否预训练
+train_complete_sub: true # 是否在完整数据集上训练
+pre_batch_size: 256
+batch_size: 256
+pre_lr: 0.0001
+lr: 0.00001
+k: 3 # 风格knn的邻居个数
+update_interval: 30  
+cluster_interval: 9999 # no work
+encoder_trunk_dim: [500, 500] # 内容，风格的AE共用的主干
+encoder_head_dim: [2000] # 内容，风格AE各自分开的支干
+# 采用的是相加
+content_dim: [128, 128, 128, 128, 128]  # 等权相加
+style_dim: [32, 32, 32, 32, 32] # 加权相加
+ae_weight: 1   # 包含了MSE和最小化风格，内容相似性
+hisc_weight: 0.01  # 内容，风格最小相似性损失
+contrastive_weight1: 0.0001 # 内容的对齐损失
+contrastive_weight2: 0.0001 # 内容+风格的对齐损失
+seed: 42
+normalize: 1
